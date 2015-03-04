@@ -66,7 +66,7 @@ module TranslationCenter
 
   	   it "should assign render categories/show.html" do
   	  	delete :destroy, id: translation_key.id
-	      	expect(response).to redirect_to(controller: :categories, action: :show, id: translation_key.category.id)
+	      	expect(response).to redirect_to(translation_key.category)
   	  end
   	end
 
@@ -74,13 +74,13 @@ module TranslationCenter
         it "should assign translations & render search" do
           get :search, search_key_name: translation_key.name
           expect(assigns(:translation_key)).to eq translation_key
-          expect(response).to redirect_to(controller: :translation_keys, action: :show, id: translation_key.id)
+          expect(response).to redirect_to(translation_key)
         end
 
          it "should render search.js" do
           get :search, query: " ", format: :json
           expect(assigns(:key_names).class.name).to eq "ActiveRecord::Relation"
-          expect(response).not_to redirect_to(controller: :translation_keys, action: :show, id: translation_key.id)
+          expect(response).not_to redirect_to(translation_key)
         end
     end  
   end
